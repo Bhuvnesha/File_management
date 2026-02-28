@@ -12,7 +12,7 @@ class FileManager extends Controller
 
     public function __construct()
     {
-        helper('filesytem');
+        helper(['filesytem','permission']);
         $this->uploadpath = WRITEPATH . "uploads/";
     }
 

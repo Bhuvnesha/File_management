@@ -170,3 +170,17 @@ Create ZIP backup
 
 Check analytics dashboard values
 
+## To run all migrations
+
+php spark migrate
+
+## To run seeder
+
+php spark db:seed RbacSeeder
+
+## 🏆 Final Database Structure
+
+roles
+permissions
+role_permissions
+users (role_id FK)
