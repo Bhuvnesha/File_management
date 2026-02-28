@@ -5,14 +5,25 @@ if($session->getFlashdata()){ ?>
 	<?php echo $session->getFlashdata('message'); ?>
 <?php } ?>
 
-<h2>Files List</h2>
+<h2>Files List </h2>
+<h3>Role: <?php echo session()->get('role'); ?></h3>
 
+<?php if(in_array(session()->get('role'), ['admin','manager']) ){ ?>
 <form action="<?= site_url('filemanager/upload') ?>" method="post" enctype="multipart/form-data">
     <input type="file" name="userfile" required>
     <button type="submit">Upload</button>
 </form>
+<?php } ?>
+
+<?php if(in_array(session()->get('role'), ['admin']) ){ ?>
 <a href="<?php echo site_url('filemanager/zipBackup'); ?>">create zip file</a> |
-<a href="<?php echo site_url('filemanager/analytics'); ?>">Analytics</a>
+<?php } ?>
+
+<?php if(in_array(session()->get('role'), ['admin','manager']) ){ ?>
+<a href="<?php echo site_url('filemanager/analytics'); ?>">Analytics</a> |
+<?php } ?>
+
+<a href="<?php echo site_url('logout'); ?>">Logout</a>
 <hr>
 
 <table border="1">
@@ -36,7 +47,13 @@ if($session->getFlashdata()){ ?>
 			<td><?php echo date("Y-M-d H:i:s",$file['date'])  ?></td>
 			<td>
 				<?php $file_name = $file['name']; ?>
-				<a href = <?php echo base_url('filemanager/delete/'.$file_name) ?> >DELETE</a> |
+				<?php 
+				if(in_array(session()->get('role'),['admin']))
+					{ 
+				?>
+				<a href = <?php echo base_url('filemanager/delete/'.$file_name) ?> >DELETE</a>
+				 |
+				<?php } ?>
 				<a href = <?php echo base_url('filemanager/download/'.$file_name) ?> >Download</a>
 			</td>
 		</tr>
